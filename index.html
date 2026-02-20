@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pacapac John Carlo</title>
+
+<style>
+body {
+    margin:0;
+    font-family: Consolas, monospace;
+    background:black;
+    color:#00ff9f;
+    overflow-x:hidden;
+}
+
+/* MATRIX BACKGROUND */
+body::before{
+    content:"";
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:url('https://i.imgur.com/8fK4h6G.gif');
+    opacity:0.15;
+    z-index:-1;
+}
+
+/* INTRO SCREEN */
+#intro{
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    font-size:20px;
+    padding:20px;
+}
+
+/* MAIN CONTENT */
+#main{
+    display:none;
+    padding:20px;
+}
+
+.container{
+    border:1px solid #00ff9f;
+    margin:20px 0;
+    padding:20px;
+    box-shadow:0 0 15px #00ff9f;
+}
+
+/* PROFILE */
+.profile{
+    text-align:center;
+}
+.profile img{
+    width:140px;
+    border-radius:50%;
+    border:3px solid #00ff9f;
+    box-shadow:0 0 20px #00ff9f;
+}
+
+/* BUTTONS */
+button{
+    background:black;
+    color:#00ff9f;
+    border:1px solid #00ff9f;
+    padding:10px 20px;
+    cursor:pointer;
+}
+button:hover{
+    background:#00ff9f;
+    color:black;
+}
+
+/* VIDEO */
+video{
+    width:100%;
+    max-width:500px;
+    border:1px solid #00ff9f;
+    box-shadow:0 0 15px #00ff9f;
+}
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND MUSIC -->
+<audio id="bgmusic" loop>
+<source src="bg.mp3" type="audio/mp3">
+</audio>
+
+<!-- INTRO -->
+<div id="intro">
+    <div id="typing"></div>
+</div>
+
+<!-- MAIN -->
+<div id="main">
+
+<div class="profile">
+    <img src="profile.jpg">
+    <h2>Pacapac John Carlo</h2>
+    <p>Cybersecurity Enthusiast</p>
+</div>
+
+<div class="container">
+<h3>Skills & Tools</h3>
+<p>Kali Linux | Nmap | Wireshark | Burp Suite | HTML | JavaScript | OSINT</p>
+</div>
+
+<div class="container">
+<h3>Projects</h3>
+<p>Login Security Testing</p>
+<p>Recon Practice Lab</p>
+</div>
+
+<div class="container">
+<h3>Terminal Simulation</h3>
+<p>Running reconnaissance...</p>
+<p>Target Found</p>
+<p>Scan Complete</p>
+<button onclick="alert('Simulation Only ✔')">Run Scan</button>
+</div>
+
+<div class="container">
+<h3>Video Analysis</h3>
+<video controls>
+<source src="video.mp4" type="video/mp4">
+</video>
+</div>
+
+<div class="container">
+<h3>Resume</h3>
+<a href="resume.pdf" download>
+<button>Download CV</button>
+</a>
+</div>
+
+</div>
+
+<script>
+/* KIRA STYLE INTRO */
+let text = [
+"Initializing secure interface...",
+"Connecting to global network...",
+"Analyzing digital environment...",
+"Justice will prevail.",
+"I am... Kira."
+];
+
+let i=0;
+let j=0;
+let current="";
+let speed=40;
+
+function type(){
+    if(i<text.length){
+        if(j<text[i].length){
+            current+=text[i][j];
+            document.getElementById("typing").innerHTML=current;
+            j++;
+            setTimeout(type,speed);
+        }else{
+            current+="<br><br>";
+            j=0;
+            i++;
+            setTimeout(type,600);
+        }
+    }else{
+        setTimeout(startMain,1000);
+    }
+}
+
+function startMain(){
+    document.getElementById("intro").style.display="none";
+    document.getElementById("main").style.display="block";
+
+    /* start music after user interaction rule */
+    document.body.addEventListener("click",()=>{
+        document.getElementById("bgmusic").play();
+    },{once:true});
+}
+
+type();
+</script>
+
+</body>
+  </html>
