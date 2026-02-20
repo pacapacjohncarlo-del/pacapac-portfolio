@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pacapac Portfolio</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Courier New, monospace;
+  background:black;
+  color:#00ff9f;
+  overflow-x:hidden;
+}
+
+/* INTRO SCREEN */
+#intro{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:black;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  z-index:9999;
+}
+
+#intro-text{
+  max-width:600px;
+  font-size:18px;
+  line-height:1.6;
+  padding:20px;
+}
+
+/* MATRIX BACKGROUND */
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:-1;
+}
+
+/* MAIN */
+.container{
+  padding:30px;
+  text-align:center;
+}
+
+.profile{
+  width:150px;
+  border-radius:50%;
+  border:2px solid #00ff9f;
+  box-shadow:0 0 15px #00ff9f;
+  margin:15px 0;
+}
+
+.card{
+  border:1px solid #00ff9f;
+  padding:20px;
+  margin:20px auto;
+  max-width:600px;
+  background:rgba(0,0,0,0.7);
+  box-shadow:0 0 15px #00ff9f;
+}
+
+button{
+  background:black;
+  color:#00ff9f;
+  border:1px solid #00ff9f;
+  padding:10px 20px;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#00ff9f;
+  color:black;
+}
+
+video{
+  width:100%;
+  max-width:600px;
+  border:1px solid #00ff9f;
+  box-shadow:0 0 10px #00ff9f;
+}
+</style>
+</head>
+
+<body>
+
+<!-- AUDIO -->
+<audio id="bgSound" src="bg.mp3"></audio>
+
+<!-- INTRO -->
+<div id="intro" onclick="startIntro()">
+  <div id="intro-text">Click to Initialize System...</div>
+</div>
+
+<canvas id="matrix"></canvas>
+
+<!-- MAIN CONTENT -->
+<div class="container">
+<h1>Pacapac John Carlo</h1>
+<img src="profile.jpg" class="profile">
+<p>Cybersecurity Enthusiast</p>
+
+<div class="card">
+<h2>Skills</h2>
+<p>Kali Linux | Nmap | Wireshark | Burp Suite | HTML | JavaScript | OSINT</p>
+</div>
+
+<div class="card">
+<h2>Projects</h2>
+<p>Security Testing Lab</p>
+<p>Recon Practice Environment</p>
+</div>
+
+<div class="card">
+<h2>Resume</h2>
+<a href="resume.pdf" download>
+<button>Download CV</button>
+</a>
+</div>
+
+<div class="card">
+<h2>Featured Video</h2>
+<video controls>
+<source src="video.mp4" type="video/mp4">
+</video>
+</div>
+
+</div>
+
+<script>
+/* START INTRO */
+function startIntro(){
+  document.getElementById("bgSound").play();
+  document.getElementById("intro-text").innerHTML="";
+  typeText();
+}
+
+const msg = `
+Initializing secure interface...
+Connecting to global network...
+Analyzing digital environment...
+
+Access Granted.
+Welcome.
+`;
+
+let i=0;
+function typeText(){
+  if(i < msg.length){
+    document.getElementById("intro-text").innerHTML += msg.charAt(i);
+    i++;
+    setTimeout(typeText,40);
+  }else{
+    setTimeout(()=>{
+      document.getElementById("intro").style.display="none";
+    },1500);
+  }
+}
+
+/* MATRIX EFFECT */
+const canvas=document.getElementById("matrix");
+const ctx=canvas.getContext("2d");
+
+canvas.height=window.innerHeight;
+canvas.width=window.innerWidth;
+
+let letters="01".split("");
+let fontSize=14;
+let columns=canvas.width/fontSize;
+let drops=[];
+
+for(let x=0;x<columns;x++) drops[x]=1;
+
+function draw(){
+ctx.fillStyle="rgba(0,0,0,0.05)";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+ctx.fillStyle="#00ff9f";
+ctx.font=fontSize+"px monospace";
+
+for(let i=0;i<drops.length;i++){
+let text=letters[Math.floor(Math.random()*letters.length)];
+ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+
+if(drops[i]*fontSize>canvas.height && Math.random()>0.975)
+drops[i]=0;
+
+drops[i]++;
+}
+}
+setInterval(draw,33);
+</script>
+
+</body>
+  </html>
